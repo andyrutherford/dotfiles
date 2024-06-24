@@ -13,7 +13,9 @@ return {
 
 		null_ls.setup({
 			root_dir = null_ls_utils.root_pattern(".null-ls-root", "Makefile", ".git", "package.json"),
-			sources = {
+		
+
+      sources = {
 				formatting.prettierd.with({
 					disabled_filetypes = {
 						"markdown",
@@ -22,9 +24,9 @@ return {
 				}),
 				formatting.stylua,
 				-- diagnostics.eslint_d.with({
-				--   condition = function(utils)
-				--     return utils.root_has_file({ ".eslintrc.js", ".eslintrc.cjs" })
-				--   end,
+				-- 	condition = function(utils)
+				-- 		return utils.root_has_file({ ".eslintrc.js", ".eslintrc.cjs" })
+				-- 	end,
 				-- }),
 			},
 			-- configure format on save

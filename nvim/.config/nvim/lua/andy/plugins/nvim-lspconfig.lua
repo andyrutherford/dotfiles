@@ -6,6 +6,15 @@ return {
 	},
 	enabled = true,
 	config = function()
+		-- Diagnostic highlight settings
+		vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { undercurl = true, sp = "#FF0000" })
+		vim.api.nvim_set_hl(0, "DiagnosticError", { fg = "#FF0000", undercurl = true, sp = "#FF0000" })
+		vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", { undercurl = true, sp = "#FFA500" })
+		vim.api.nvim_set_hl(0, "DiagnosticWarn", { fg = "#FFA500", undercurl = true, sp = "#FFA500" })
+		vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", { undercurl = true, sp = "#00FFFF" })
+		vim.api.nvim_set_hl(0, "DiagnosticInfo", { fg = "#00FFFF", undercurl = true, sp = "#00FFFF" })
+		vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", { undercurl = true, sp = "#0000FF" })
+		vim.api.nvim_set_hl(0, "DiagnosticHint", { fg = "#0000FF", undercurl = true, sp = "#0000FF" })
 		local lspconfig = require("lspconfig")
 		local util = require("lspconfig.util")
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
@@ -13,6 +22,9 @@ return {
 		-- Disable inline error messages
 		vim.diagnostic.config({
 			virtual_text = false,
+			underline = true,
+			signs = true,
+			update_in_insert = false,
 			float = {
 				border = "single",
 			},
@@ -65,7 +77,12 @@ return {
 				vim.diagnostic.open_float,
 				{ buffer = bufnr, desc = "Show diagnostics for line" }
 			)
-			-- vim.keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", {buffer = bufnr, desc = 'Show definition, references'})
+			vim.keymap.set(
+				"n",
+				"gR",
+				"<cmd>Telescope lsp_references<CR>",
+				{ buffer = bufnr, desc = "Show definition, references" }
+			)
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = bufnr, desc = "Go to definition" })
 		end
 
@@ -92,7 +109,6 @@ return {
 		local function get_angular_ls_path()
 			local node_version = vim.fn.systemlist("node -v")[1]
 			if node_version then
-				-- node_version = node_version:gsub("v", "") -- Remove 'v' prefix
 				return os.getenv("NVM_DIR") .. "/versions/node/" .. node_version .. "/bin/ngserver"
 			else
 				-- Fallback to a default path or raise an error
@@ -114,13 +130,12 @@ return {
 					angular_ls_path:gsub("/bin/ngserver", "/lib/node_modules/@angular/language-server"),
 				}
 			end,
-			-- Add any other configuration options you need
 		})
-		-- configure lua server (with special settings)
+
 		lspconfig["lua_ls"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
-			settings = { -- custom settings for lua
+			settings = {
 				Lua = {
 					-- make the language server recognize "vim" global
 					diagnostics = {

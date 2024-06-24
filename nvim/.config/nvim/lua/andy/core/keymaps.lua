@@ -40,10 +40,12 @@ vim.keymap.set("n", "<Leader>h", ":noh<CR>", { silent = true })
 -- Fixes pasting after visual selection.
 vim.keymap.set("v", "p", '"_dP')
 
+-- increment/decrement numbers
+vim.keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" }) -- increment
+vim.keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" }) -- decrement
+
 -- Navigate vim panes same as tmux
 vim.keymap.set("n", "<c-k>", ":wincmd k<CR>")
 vim.keymap.set("n", "<c-j>", ":wincmd j<CR>")
 vim.keymap.set("n", "<c-h>", ":wincmd h<CR>")
 vim.keymap.set("n", "<c-l>", ":wincmd l<CR>")
-
-
