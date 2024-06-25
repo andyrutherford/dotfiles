@@ -22,6 +22,10 @@ return {
 					},
 					never_show = {},
 				},
+        follow_current_file = {
+          enabled = true,
+          leave_dirs_open = false,
+        },
 			},
 		})
 		vim.keymap.set("n", "<C-n>", ":Neotree toggle<CR>")

@@ -37,7 +37,7 @@ return {
 							hint = { fg = "#89B4FA" },
 						},
 					},
-					{ "filename" },
+					{ "filename", path = 1 },
 				},
 				lualine_x = { "encoding", "fileformat", "filetype" },
 				lualine_y = { "progress" },
