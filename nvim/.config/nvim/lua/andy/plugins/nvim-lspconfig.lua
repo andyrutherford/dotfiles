@@ -79,6 +79,18 @@ return {
 			)
 			vim.keymap.set(
 				"n",
+				"<leader>dn",
+				vim.diagnostic.goto_next,
+				{ buffer = bufnr, desc = "Show next diagnostic" }
+			)
+			vim.keymap.set(
+				"n",
+				"<leader>dp",
+				vim.diagnostic.goto_prev,
+				{ buffer = bufnr, desc = "Show previous diagnostic" }
+			)
+			vim.keymap.set(
+				"n",
 				"gR",
 				"<cmd>Telescope lsp_references<CR>",
 				{ buffer = bufnr, desc = "Show definition, references" }
