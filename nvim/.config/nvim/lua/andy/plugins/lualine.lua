@@ -7,7 +7,7 @@ return {
 				theme = "catppuccin",
 				-- section_separators = { "", "" },
 				-- component_separators = { "", "" },
-				disabled_filetypes = { "neo-tree" },
+				disabled_filetypes = { "neo-tree", "trouble" },
 			},
 
 			sections = {

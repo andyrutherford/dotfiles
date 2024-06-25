@@ -96,6 +96,15 @@ return {
 				{ buffer = bufnr, desc = "Show definition, references" }
 			)
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = bufnr, desc = "Go to definition" })
+
+			-- Refresh diagnostics when leaving insert mode
+			vim.api.nvim_create_autocmd({ "TextChanged", "InsertLeave" }, {
+				buffer = bufnr,
+				callback = function()
+					vim.lsp.buf.document_highlight()
+					vim.diagnostic.setloclist({ open = false }) -- Update the diagnostic location list
+				end,
+			})
 		end
 
 		local capabilities = cmp_nvim_lsp.default_capabilities()
