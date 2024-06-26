@@ -12,10 +12,20 @@ vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = tr
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- Move to first symbol on the line
-vim.keymap.set("n", "H", "^")
+vim.keymap.set({ "n", "v" }, "H", "^")
+vim.keymap.set("n", "dH", "d^")
 
 -- Move to last symbol of the line
-vim.keymap.set("n", "L", "$")
+vim.keymap.set({ "n", "v" }, "L", "$")
+vim.keymap.set("n", "dL", "d$")
+
+-- When replacing text from selected text, removes selected text from register after selection
+vim.keymap.set("x", "<leader>p", '"_dP', { noremap = true, silent = true })
+
+-- Scroll up and center viewport on current line
+vim.keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true, silent = true })
+-- Scroll down and center viewport on current line
+vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true, silent = true })
 
 -- Shift + q - Quit
 vim.keymap.set("n", "Q", "<C-W>q")
@@ -34,7 +44,7 @@ vim.cmd("vnoremap <silent> y y`]")
 vim.cmd("vnoremap <silent> p p`]")
 vim.cmd("nnoremap <silent> p p`]")
 
--- Space + Space to clean search highlight
+-- Space + h to clean search highlight
 vim.keymap.set("n", "<Leader>h", ":noh<CR>", { silent = true })
 
 -- Fixes pasting after visual selection.

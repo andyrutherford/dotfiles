@@ -97,7 +97,7 @@ return {
 			)
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = bufnr, desc = "Go to definition" })
 
-			vim.keymap.set("n", "gt", vim.lsp.buf.hover, { buffer = bufnr, desc = "Go to definition" })
+			vim.keymap.set("n", "gt", vim.lsp.buf.hover, { buffer = bufnr, desc = "Go to type definion" })
 
 			-- Refresh diagnostics when leaving insert mode
 			vim.api.nvim_create_autocmd({ "TextChanged", "InsertLeave" }, {
