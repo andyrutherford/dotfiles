@@ -27,6 +27,10 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true, silent = true })
 -- Scroll down and center viewport on current line
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true, silent = true })
 
+-- With selected text, move it up or down
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+
 -- Shift + q - Quit
 vim.keymap.set("n", "Q", "<C-W>q")
 

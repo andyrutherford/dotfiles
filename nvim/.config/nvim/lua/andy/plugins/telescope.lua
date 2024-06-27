@@ -9,7 +9,14 @@ return {
 				-- Include hidden files except for .git
 				builtin.find_files({ find_command = { "rg", "--files", "--hidden", "-g", "!.git" } })
 			end, {})
-			vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
+			vim.keymap.set("n", "<leader>fg", function()
+				-- Include hidden files except for .git
+				builtin.live_grep({
+					additional_args = function(opts)
+						return { "--hidden", "--glob", "!.git/*" }
+					end,
+				})
+			end, {})
 			vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
 			vim.keymap.set("n", "<leader>fd", builtin.diagnostics, {})
 			vim.keymap.set("n", "<leader>gc", builtin.git_commits, {})
