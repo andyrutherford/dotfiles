@@ -67,7 +67,7 @@ return {
 			vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = bufnr, desc = "Smart rename" })
 			vim.keymap.set(
 				{ "n", "v" },
-				"gf",
+				"ca",
 				vim.lsp.buf.code_action,
 				{ buffer = bufnr, desc = "See available code actions" }
 			)
@@ -128,32 +128,51 @@ return {
 			on_attach = on_attach,
 		})
 
-		-- Function to get the Angular Language Server path
-		local function get_angular_ls_path()
-			local node_version = vim.fn.systemlist("node -v")[1]
-			if node_version then
-				return os.getenv("NVM_DIR") .. "/versions/node/" .. node_version .. "/bin/ngserver"
-			else
-				-- Fallback to a default path or raise an error
-				error("Node.js version not found")
-			end
-		end
-		local angular_ls_path = get_angular_ls_path()
+	-- 	local function get_angular_language_server_path()
+	-- 		-- Path to the nvm versions directory
+	-- 		local nvm_versions_path = os.getenv("HOME") .. "/.nvm/versions/node/"
+			
+	-- 		-- Get the list of directories in the nvm versions directory
+	-- 		local handle = io.popen('ls -1 "' .. nvm_versions_path .. '"')
+	-- 		local result = handle:read("*a")
+	-- 		handle:close()
+	
+	-- 		-- Find the current node version (assume it's the latest directory)
+	-- 		local node_version
+	-- 		for version in result:gmatch("[^\r\n]+") do
+	-- 				node_version = version
+	-- 		end
+	
+	-- 		-- Construct the desired path
+	-- 		local path = nvm_versions_path .. node_version .. "/lib/node_modules/@angular/language-server"
+	
+	-- 		return path
+	-- end
+	
+	-- -- Use the path in the LSP configuration
+	local angular_ls_path = "/Users/andy/.nvm/versions/node/v20.13.1/lib/node_modules/@angular/language-server"
+	local ts_path = "/Users/andy/.nvm/versions/node/v20.13.1/lib/node_modules/typescript"
 
-		-- Configure the Angular Language Server
-		lspconfig.angularls.setup({
-			cmd = { angular_ls_path, "--stdio" },
+
+	local project_library_path = "/Users/andy/.nvm/versions/node/v20.13.1/lib/node_modules/@angular/language-server"
+
+	local cmd = {"node", 
+	"/Users/andy/.nvm/versions/node/v20.13.1/lib/node_modules/@angular/language-server",
+	"--stdio",
+	 "--tsProbeLocations",
+	  project_library_path,
+		 "--ngProbeLocations",
+		  project_library_path
+		}
+	-- Configure the Angular Language Server
+	require('lspconfig').angularls.setup({
+			cmd = cmd,
+			-- on_attach = on_attach, 
+			capabilities = capabilities,
 			on_new_config = function(new_config, new_root_dir)
-				new_config.cmd = {
-					angular_ls_path,
-					"--stdio",
-					"--tsProbeLocations",
-					angular_ls_path:gsub("/bin/ngserver", "/lib/node_modules/@angular/language-server"),
-					"--ngProbeLocations",
-					angular_ls_path:gsub("/bin/ngserver", "/lib/node_modules/@angular/language-server"),
-				}
+					new_config.cmd = cmd
 			end,
-		})
+	})
 
 		lspconfig["lua_ls"].setup({
 			capabilities = capabilities,

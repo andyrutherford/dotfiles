@@ -2,7 +2,7 @@ return {
 	"nvimtools/none-ls.nvim",
 	lazy = true,
 	event = { "BufReadPre", "BufNewFile" },
-	dependencies = { "nvim-lua/plenary.nvim" },
+	dependencies = { "nvim-lua/plenary.nvim", "nvimtools/none-ls-extras.nvim", },
 	config = function()
 		local null_ls = require("null-ls")
 		local null_ls_utils = require("null-ls.utils")
@@ -28,6 +28,7 @@ return {
 				-- 		return utils.root_has_file({ ".eslintrc.js", ".eslintrc.cjs" })
 				-- 	end,
 				-- }),
+        require("none-ls.code_actions.eslint_d"),
 			},
 			-- configure format on save
 			on_attach = function(current_client, bufnr)
